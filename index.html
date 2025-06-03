@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toffle - Clothing Brand</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Swiper JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6, .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+        }
+        
+        .hero {
+            height: 100vh;
+            width: 100%;
+            background-image: url('./assets/images/Hall\ capacity\ -\ 240\ -\ People\ Inside\ -\ 350People\ outside\ -\ 30-40First\ Show\ for\ \'US\'.\ I\ mean\ it\,\ being\ one\ of\ the\ rare\ bootstrapped\ brand\ running\ for\ good\ time\ now\,\ wouldn\'t\ have\ been\ possible\ without\ your\ support.\ \ \(3\).jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Overlay for hero section */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+            z-index: 1;
+        }
+        
+        /* Hero tagline */
+        .hero-tagline {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #ffffff;
+        }
+        
+        .hero-tagline .small-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        
+        .hero-tagline .large-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 72px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 50px; /* Increased padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.5s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: #ffffff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 25px 50px; /* Increased padding when scrolled */
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            font-size: 28px; /* Increased font size */
+        }
+        
+        .logo {
+            font-size: 36px; /* Increased font size */
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+        
+        .nav-right {
+            display: flex;
+            gap: 30px; /* Increased gap */
+        }
+        
+        .nav-icon {
+            cursor: pointer;
+            font-size: 24px; /* Increased font size */
+            transition: color 0.3s ease;
+        }
+        
+        .nav-icon:hover {
+            color: #888;
+        }
+        
+        /* Panel Styles - Cooler slide-in panels instead of centered popups */
+        .panel-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+        }
+        
+        .panel {
+            position: fixed;
+            height: 100vh;
+            width: 40%;
+            max-width: 500px;
+            top: 0;
+            background: #ffffff; /* Changed to white background for all panels */
+            color: #000000; /* Changed to black text for all panels */
+            padding: 80px 50px;
+            overflow-y: auto;
+            z-index: 2001;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        #menuPanel {
+            left: 0;
+            transform: translateX(-100%);
+            width: 35%;
+        }
+        
+        #searchPanel, #profilePanel, #cartPanel {
+            right: 0;
+            transform: translateX(100%);
+        }
+        
+        .panel-close {
+            position: absolute;
+            top: 35px;
+            right: 35px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            color: #000000; /* Ensuring icon color is black */
+        }
+        
+        .panel-close:hover {
+            background: #e0e0e0;
+            transform: rotate(90deg);
+        }
+        
+        .panel-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #000000; /* Changed to black for all panels */
+            border-bottom: 1px solid #e0e0e0; /* Changed to light gray for all panels */
+            padding-bottom: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+        }
+        
+        .panel-content {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* Menu Panel Specific */
+        .menu-list {
+            list-style: none;
+            margin-top: 40px;
+        }
+        
+        .menu-list li {
+            margin: 30px 0;
+            font-size: 28px; /* Larger font size */
+            font-weight: 700; /* Bolder font */
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateX(-20px);
+            position: relative;
+            font-family: 'Montserrat', sans-serif; /* Using the bold font for menu */
+            cursor: pointer;
+        }
+        
+        .menu-list li:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 0;
+            height: 1px;
+            background: #000; /* Black underline */
+            transition: width 0.3s ease;
+        }
+        
+        .menu-list li:hover:after {
+            width: 100%;
+        }
+        
+        /* Social icons for menu */
+        .menu-social {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            display: flex;
+            gap: 25px;
+        }
+        
+        .menu-social a {
+            font-size: 22px;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+        
+        .menu-social a:hover {
+            color: #000;
+        }
+        
+        /* Search Panel Specific */
+        .search-form {
+            margin-top: 40px;
+            opacity: 0;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 20px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 0;
+            color: #000000;
+            font-size: 18px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .search-input::placeholder {
+            color: #888;
+        }
+        
+        .search-button {
+            width: 100%;
+            padding: 20px;
+            margin-top: 20px;
+            background: #000000;
+            color: #fff;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-button:hover {
+            background: #333;
+        }
+        
+        /* Login Form */
+        .login-form {
+            margin-top: 40px;
+            opacity: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 20px;
+            background: #f5f5f5;
+            border: none;
+            color: #000000;
+            font-size: 18px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .form-input::placeholder {
+            color: #888;
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 20px;
+            background: #000000;
+            color: #fff;
+            border: none;
+            margin-top: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .login-button:hover {
+            background: #333;
+        }
+        
+        .signup-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #555;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .signup-link:hover {
+            color: #000;
+        }
+        
+        /* Cart Panel */
+        .cart-items {
+            margin: 30px 0;
+            opacity: 0;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 25px 0;
+            font-weight: bold;
+            font-size: 22px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .checkout-button {
+            width: 100%;
+            padding: 20px;
+            background: #000000;
+            color: #fff;
+            border: none;
+            margin-top: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .checkout-button:hover {
+            background: #333;
+        }
+        
+        /* Custom Icons */
+        .menu-icon-custom {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .menu-icon-custom span {
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: currentColor;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-icon-custom span:nth-child(1) {
+            top: 0;
+        }
+        
+        .menu-icon-custom span:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .menu-icon-custom span:nth-child(3) {
+            bottom: 0;
+        }
+        
+        .search-icon-custom {
+            position: relative;
+            width: 22px;
+            height: 22px;
+            display: inline-block;
+        }
+        
+        .search-icon-custom::before {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+        }
+        
+        .search-icon-custom::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 9px;
+            background: currentColor;
+            transform: rotate(-45deg);
+            bottom: 0;
+            right: 0;
+        }
+        
+        .profile-icon-custom {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+        }
+        
+        .profile-icon-custom::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .profile-icon-custom::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 10px;
+            border: 2px solid currentColor;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top: none;
+        }
+        
+        .cart-icon-custom {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+        }
+        
+        .cart-icon-custom::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 3px;
+            background: currentColor;
+            top: 5px;
+            left: 3px;
+        }
+        
+        .cart-icon-custom::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 12px;
+            border: 2px solid currentColor;
+            bottom: 2px;
+            left: 3px;
+            border-radius: 2px;
+        }
+        
+        .cart-icon-custom span {
+            position: absolute;
+            width: 2px;
+            height: 6px;
+            background: currentColor;
+            top: 0px;
+            border-radius: 1px;
+        }
+        
+        .cart-icon-custom span:nth-child(1) {
+            left: 7px;
+        }
+        
+        .cart-icon-custom span:nth-child(2) {
+            right: 7px;
+        }
+        
+        /* New In Section Styles */
+        .new-in-section {
+            padding: 100px 0;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 42px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title.centered {
+            text-align: center;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #000;
+        }
+        
+        .section-title.centered:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .swiper-container.new-in-swiper {
+            padding: 20px 5px 60px;
+        }
+        
+        .product-card {
+            background-color: #fff;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-details {
+            padding: 25px;
+        }
+        
+        .product-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: #555;
+        }
+        
+        /* Swiper navigation styling */
+        .swiper-button-next, .swiper-button-prev {
+            color: #000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 20px;
+        }
+        
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background: #f0f0f0;
+        }
+        
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: #000;
+        }
+        
+        /* Body state when panel is open */
+        body.panel-open {
+            overflow: hidden;
+        }
+        
+        /* Categories Section Styles */
+        .categories-section {
+            padding: 100px 0;
+            background-color: #ffffff;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .category-card {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+        
+        .category-card:nth-child(4) {
+            grid-column: 2 / 3;
+        }
+        
+        .category-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .category-card:hover .category-image {
+            transform: scale(1.1);
+        }
+        
+        .category-card:hover .category-overlay {
+            opacity: 1;
+        }
+        
+        .category-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s ease 0.1s;
+        }
+        
+        .category-button {
+            background-color: white;
+            color: black;
+            border: none;
+            padding: 12px 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s ease 0.2s;
+        }
+        
+        .category-button:hover {
+            background-color: black;
+            color: white;
+        }
+        
+        .category-card:hover .category-title,
+        .category-card:hover .category-button {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Custom cursor styles */
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: width 0.3s, height 0.3s, background-color 0.3s, border 0.3s;
+        }
+        
+        .cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+        
+        /* Custom cursor hover state */
+        .cursor-hover {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Hide default cursor on interactive elements */
+        a, button, .category-card, .product-card, .nav-icon, .menu-icon {
+            cursor: none;
+        }
+        
+        /* Footer Styles */
+        .footer {
+            background-color: #f9f9f9;
+            padding: 80px 0 40px;
+            color: #333;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr repeat(3, 1fr) 1.5fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .footer-tagline {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-social a {
+            color: #333;
+            font-size: 18px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            color: #000;
+            transform: translateY(-3px);
+        }
+        
+        .footer-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #555;
+            text-decoration: none;
+            transition: color 0.3s ease, padding-left 0.3s ease;
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: #000;
+            padding-left: 5px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+        }
+        
+        .newsletter-input {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 10px;
+        }
+        
+        .newsletter-button {
+            padding: 12px 15px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .newsletter-button:hover {
+            background-color: #333;
+        }
+        
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            font-size: 24px;
+            color: #666;
+        }
+        
+        /* Footer Responsive */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .brand-column, .newsletter-column {
+                grid-column: span 3;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+            
+            .brand-column, .newsletter-column {
+                grid-column: span 2;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .brand-column, .newsletter-column {
+                grid-column: span 1;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body data-barba="wrapper">
+    <!-- Custom cursor elements -->
+    <div class="cursor-follower"></div>
+    <div class="cursor-dot"></div>
+    
+    <main data-barba="container" data-barba-namespace="home">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="menu-icon">
+                <div class="menu-icon-custom">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <div class="logo">Toffle</div>
+            
+            <div class="nav-right">
+                <div class="nav-icon search-icon">
+                    <div class="search-icon-custom"></div>
+                </div>
+                <div class="nav-icon profile-icon">
+                    <div class="profile-icon-custom"></div>
+                </div>
+                <div class="nav-icon cart-icon">
+                    <div class="cart-icon-custom">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Hero section -->
+        <div class="hero">
+            <div class="hero-tagline">
+                <div class="small-text">NEW YEAR, OLD TOFFLE</div>
+                <div class="large-text">ROUGH LUXURY</div>
+            </div>
+        </div>
+        
+        <!-- New In Section with Swiper -->
+        <section class="new-in-section">
+            <div class="container">
+                <h2 class="section-title">New In</h2>
+                
+                <!-- Swiper container -->
+                <div class="swiper-container new-in-swiper">
+                    <div class="swiper-wrapper">
+                        <!-- Swiper Slide 1 -->
+                        <div class="swiper-slide">
+                            <div class="product-card" 
+                                data-normal-img="./assets/images/Hall capacity - 240 - People Inside - 350People outside - 30-40First Show for 'US'. I mean it, being one of the rare bootstrapped brand running for good time now, wouldn't have been possible without your support. (13).jpg"
+                                data-hover-img="./assets/images/Hall capacity - 240 - People Inside - 350People outside - 30-40First Show for 'US'. I mean it, being one of the rare bootstrapped brand running for good time now, wouldn't have been possible without your support. (12).jpg"
+                            >
+                                <div class="product-image">
+                                    <img src="./assets/images/Hall capacity - 240 - People Inside - 350People outside - 30-40First Show for 'US'. I mean it, being one of the rare bootstrapped brand running for good time now, wouldn't have been possible without your support. (13).jpg" alt="New Collection 1">
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">Streetwear Collection</h3>
+                                    <p class="product-price">₹2,499</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Swiper Slide 2 -->
+                        <div class="swiper-slide">
+                            <div class="product-card"
+                                data-normal-img="./assets/images/Hall capacity - 240 - People Inside - 350People outside - 30-40First Show for 'US'. I mean it, being one of the rare bootstrapped brand running for good time now, wouldn't have been possible without your support. (11).jpg"
+                                data-hover-img="./assets/images/Hall capacity - 240 - People Inside - 350People outside - 30-40First Show for 'US'. I mean it, being one of the rare bootstrapped brand running for good time now, wouldn't have been possible without your support. (10).jpg"
+                            >
+                                <div class="product-image">
+                                    <img src="./assets/images/Hall capacity - 240 - People Inside - 350People outside - 30-40First Show for 'US'. I mean it, being one of the rare bootstrapped brand running for good time now, wouldn't have been possible without your support. (11).jpg" alt="New Collection 2">
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">Urban Essentials</h3>
+                                    <p class="product-price">₹1,899</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Swiper Slide 3 -->
+                        <div class="swiper-slide">
+                            <div class="product-card"
+                                data-normal-img="./assets/images/No this isn't Black Panther Tshirt but it's inspire from it. It's actually religious unity tshirt has symbols from all the religions and allows you to wear them in one necklace. Isn't that cool 👀🔥🥷🏽Then there's a .jpg"
+                                data-hover-img="./assets/images/No this isn't Black Panther Tshirt but it's inspire from it. It's actually religious unity tshirt has symbols from all the religions and allows you to wear them in one necklace. Isn't that cool 👀🔥🥷🏽Then there' (1).jpg"
+                            >
+                                <div class="product-image">
+                                    <img src="./assets/images/No this isn't Black Panther Tshirt but it's inspire from it. It's actually religious unity tshirt has symbols from all the religions and allows you to wear them in one necklace. Isn't that cool 👀🔥🥷🏽Then there's a .jpg" alt="New Collection 3">
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">Unity Tees</h3>
+                                    <p class="product-price">₹1,299</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation buttons -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    
+                    <!-- Pagination dots -->
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Categories Section -->
+        <section class="categories-section">
+            <div class="container">
+                <h2 class="section-title">Shop By Category</h2>
+                
+                <div class="categories-grid">
+                    <!-- Streetwear Category -->
+                    <div class="category-card">
+                        <img src="./assets/images/Hall capacity - 240 - People Inside - 350People outside - 30-40First Show for 'US'. I mean it, being one of the rare bootstrapped brand running for good time now, wouldn't have been possible without your support. (10).jpg" alt="Streetwear" class="category-image">
+                        <div class="category-overlay">
+                            <h3 class="category-title">Streetwear</h3>
+                            <button class="category-button">Shop Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Casual Category -->
+                    <div class="category-card">
+                        <img src="./assets/images/Hall capacity - 240 - People Inside - 350People outside - 30-40First Show for 'US'. I mean it, being one of the rare bootstrapped brand running for good time now, wouldn't have been possible without your support. (11).jpg" alt="Casual" class="category-image">
+                        <div class="category-overlay">
+                            <h3 class="category-title">Casual</h3>
+                            <button class="category-button">Shop Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Classics Category -->
+                    <div class="category-card">
+                        <img src="./assets/images/Hall capacity - 240 - People Inside - 350People outside - 30-40First Show for 'US'. I mean it, being one of the rare bootstrapped brand running for good time now, wouldn't have been possible without your support. (12).jpg" alt="Classics" class="category-image">
+                        <div class="category-overlay">
+                            <h3 class="category-title">Classics</h3>
+                            <button class="category-button">Shop Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Accessories Category -->
+                    <div class="category-card">
+                        <img src="./assets/images/Hall capacity - 240 - People Inside - 350People outside - 30-40First Show for 'US'. I mean it, being one of the rare bootstrapped brand running for good time now, wouldn't have been possible without your support. (13).jpg" alt="Accessories" class="category-image">
+                        <div class="category-overlay">
+                            <h3 class="category-title">Accessories</h3>
+                            <button class="category-button">Shop Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Menu Panel -->
+        <div class="panel-overlay" id="menuOverlay">
+            <div class="panel" id="menuPanel">
+                <div class="panel-close" onclick="closePanel('menuOverlay')">
+                    <i class="fas fa-times"></i>
+                </div>
+                <h2 class="panel-title">Menu</h2>
+                <div class="panel-content">
+                    <ul class="menu-list">
+                        <li>Shop By Trend</li>
+                        <li>Shop By Category</li>
+                        <li>About Us</li>
+                        <li>Contact</li>
+                    </ul>
+                    
+                    <div class="menu-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Search Panel -->
+        <div class="panel-overlay" id="searchOverlay">
+            <div class="panel" id="searchPanel">
+                <div class="panel-close" onclick="closePanel('searchOverlay')">
+                    <i class="fas fa-times"></i>
+                </div>
+                <h2 class="panel-title">Search</h2>
+                <div class="panel-content">
+                    <p>Find your perfect style</p>
+                    <form class="search-form">
+                        <input type="text" class="search-input" placeholder="Search for products...">
+                        <button type="button" class="search-button">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Profile/Login Panel -->
+        <div class="panel-overlay" id="profileOverlay">
+            <div class="panel" id="profilePanel">
+                <div class="panel-close" onclick="closePanel('profileOverlay')">
+                    <i class="fas fa-times"></i>
+                </div>
+                <h2 class="panel-title">Login</h2>
+                <div class="panel-content">
+                    <p>Sign in to your account</p>
+                    <form class="login-form">
+                        <div class="form-group">
+                            <input type="email" class="form-input" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" placeholder="Password">
+                        </div>
+                        <button type="button" class="login-button">Login</button>
+                    </form>
+                    <a href="#" class="signup-link">Don't have an account? Sign up</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cart Panel -->
+        <div class="panel-overlay" id="cartOverlay">
+            <div class="panel" id="cartPanel">
+                <div class="panel-close" onclick="closePanel('cartOverlay')">
+                    <i class="fas fa-times"></i>
+                </div>
+                <h2 class="panel-title">Your Cart</h2>
+                <div class="panel-content">
+                    <div class="cart-items">
+                        <div class="cart-item">
+                            <span>Trendy Streetwear Shirt</span>
+                            <span>₹1,999</span>
+                        </div>
+                        <div class="cart-item">
+                            <span>Designer Denim Jacket</span>
+                            <span>₹3,499</span>
+                        </div>
+                        <div class="cart-item">
+                            <span>Exclusive Toffle Cap</span>
+                            <span>₹899</span>
+                        </div>
+                    </div>
+                    <div class="cart-total">
+                        <span>Total</span>
+                        <span>₹6,397</span>
+                    </div>
+                    <button type="button" class="checkout-button">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Column -->
+                <div class="footer-column brand-column">
+                    <h3 class="footer-logo">Toffle</h3>
+                    <p class="footer-tagline">Redefining street luxury since 2020</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links Column -->
+                <div class="footer-column">
+                    <h4 class="footer-heading">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                        <li><a href="#">Collections</a></li>
+                        <li><a href="#">Sale</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Information Column -->
+                <div class="footer-column">
+                    <h4 class="footer-heading">Information</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Stores</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Customer Care Column -->
+                <div class="footer-column">
+                    <h4 class="footer-heading">Customer Care</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter Column -->
+                <div class="footer-column newsletter-column">
+                    <h4 class="footer-heading">Subscribe</h4>
+                    <p>Sign up for exclusive offers, original stories, events and more.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email" class="newsletter-input">
+                        <button type="submit" class="newsletter-button">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Bottom Bar -->
+            <div class="footer-bottom">
+                <div class="copyright">© 2023 Toffle. All rights reserved.</div>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <!-- Barba.js -->
+    <script src="https://unpkg.com/@barba/core@2.9.7/dist/barba.umd.js"></script>
+
+    <script>
+        // GSAP initialization
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Simple scroll control functions
+        function disableScroll() {
+            document.body.classList.add('no-scroll');
+        }
+        
+        function enableScroll() {
+            document.body.classList.remove('no-scroll');
+        }
+
+        // Initialize Barba.js
+        barba.init({
+            transitions: [{
+                name: 'opacity-transition',
+                leave(data) {
+                    return gsap.to(data.current.container, {
+                        opacity: 0,
+                        duration: 0.5
+                    });
+                },
+                enter(data) {
+                    return gsap.from(data.next.container, {
+                        opacity: 0,
+                        duration: 0.5
+                    });
+                }
+            }]
+        });
+        
+        // Navbar Animation with ScrollTrigger
+        const navbar = document.querySelector('.navbar');
+        
+        // Initial state - transparent navbar
+        gsap.set(navbar, {
+            color: '#ffffff',
+            backdropFilter: 'blur(0px)',
+            background: 'transparent'
+        });
+        
+        // Animate navbar on scroll
+        ScrollTrigger.create({
+            start: 'top top',
+            end: '+=100',
+            toggleClass: {targets: navbar, className: 'scrolled'},
+            onUpdate: (self) => {
+                // Change text color based on scroll position
+                const textColor = self.progress ? '#000000' : '#ffffff';
+                gsap.to(navbar, {
+                    color: textColor,
+                    duration: 0.3
+                });
+                
+                // Add some blur effect when scrolling
+                if (!self.progress) {
+                    gsap.to(navbar, {
+                        backdropFilter: 'blur(0px)',
+                        background: 'transparent',
+                        duration: 0.3
+                    });
+                } else {
+                    gsap.to(navbar, {
+                        backdropFilter: 'blur(10px)',
+                        background: 'rgba(255, 255, 255, 0.95)',
+                        duration: 0.3
+                    });
+                }
+            }
+        });
+        
+        // Animate navbar elements on load
+        const tl = gsap.timeline();
+        tl.from('.menu-icon', {opacity: 0, x: -20, duration: 0.8, ease: 'power3.out'})
+          .from('.logo', {opacity: 0, y: -20, duration: 0.8, ease: 'power3.out'}, '-=0.5')
+          .from('.nav-icon', {opacity: 0, x: 20, duration: 0.8, stagger: 0.2, ease: 'power3.out'}, '-=0.5');
+        
+        // Panel functionality
+        document.querySelector('.menu-icon').addEventListener('click', () => openPanel('menuOverlay', 'menuPanel'));
+        document.querySelector('.search-icon').addEventListener('click', () => openPanel('searchOverlay', 'searchPanel'));
+        document.querySelector('.profile-icon').addEventListener('click', () => openPanel('profileOverlay', 'profilePanel'));
+        document.querySelector('.cart-icon').addEventListener('click', () => openPanel('cartOverlay', 'cartPanel'));
+        
+        function openPanel(overlayId, panelId) {
+            const overlay = document.getElementById(overlayId);
+            const panel = document.getElementById(panelId);
+            
+            // Stop scrolling when panel opens
+            disableScroll();
+            
+            // Show panel
+            overlay.style.display = 'block';
+            document.body.classList.add('panel-open');
+            
+            const panelTl = gsap.timeline();
+            
+            // Fade in overlay
+            panelTl.to(overlay, {
+                opacity: 1,
+                duration: 0.3,
+                ease: 'power2.inOut'
+            });
+            
+            // Slide in panel
+            if (panelId === 'menuPanel') {
+                // Menu slides from left
+                panelTl.to(panel, {
+                    x: '0%',
+                    duration: 0.5,
+                    ease: 'power3.out'
+                }, '-=0.1');
+                
+                // Animate menu items sequentially
+                panelTl.to('#menuPanel .menu-list li', {
+                    opacity: 1,
+                    x: 0,
+                    stagger: 0.1,
+                    ease: 'power3.out'
+                }, '-=0.2');
+            } else {
+                // Other panels slide from right
+                panelTl.to(panel, {
+                    x: '0%',
+                    duration: 0.5,
+                    ease: 'power3.out'
+                }, '-=0.1');
+                
+                // Animate content
+                if (panelId === 'searchPanel') {
+                    panelTl.to('#searchPanel .search-form', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.5,
+                        ease: 'power3.out'
+                    }, '-=0.2');
+                } else if (panelId === 'profilePanel') {
+                    panelTl.to('#profilePanel .login-form', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.5,
+                        ease: 'power3.out'
+                    }, '-=0.2');
+                } else if (panelId === 'cartPanel') {
+                    panelTl.to('#cartPanel .cart-items', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.5,
+                        ease: 'power3.out'
+                    }, '-=0.2');
+                }
+            }
+        }
+        
+        function closePanel(overlayId) {
+            const overlay = document.getElementById(overlayId);
+            const panel = overlay.querySelector('.panel');
+            
+            document.body.classList.remove('panel-open');
+            
+            // Slide out panel
+            const closeTl = gsap.timeline({
+                onComplete: () => {
+                    enableScroll();
+                }
+            });
+            
+            // Slide out panel
+            if (overlayId === 'menuOverlay') {
+                // Menu slides to left
+                closeTl.to(panel, {
+                    x: '-100%',
+                    duration: 0.4,
+                    ease: 'power2.in'
+                });
+            } else {
+                // Other panels slide to right
+                closeTl.to(panel, {
+                    x: '100%',
+                    duration: 0.4,
+                    ease: 'power2.in'
+                });
+            }
+            
+            // Fade out overlay
+            closeTl.to(overlay, {
+                opacity: 0,
+                duration: 0.3,
+                ease: 'power2.in',
+                onComplete: () => {
+                    overlay.style.display = 'none';
+                    
+                    // Reset positions for next time
+                    if (overlayId === 'menuOverlay') {
+                        gsap.set(panel, { x: '-100%' });
+                        gsap.set('#menuPanel .menu-list li', { opacity: 0, x: -20 });
+                    } else {
+                        gsap.set(panel, { x: '100%' });
+                        if (overlayId === 'searchOverlay') {
+                            gsap.set('#searchPanel .search-form', { opacity: 0, y: 20 });
+                        } else if (overlayId === 'profileOverlay') {
+                            gsap.set('#profilePanel .login-form', { opacity: 0, y: 20 });
+                        } else if (overlayId === 'cartOverlay') {
+                            gsap.set('#cartPanel .cart-items', { opacity: 0, y: 20 });
+                        }
+                    }
+                }
+            }, '-=0.2');
+        }
+
+        // Initialize Swiper for New In section
+        const newInSwiper = new Swiper('.new-in-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            speed: 800,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                }
+            },
+        });
+        
+        // Image hover effect for product cards
+        const productCards = document.querySelectorAll('.product-card');
+        
+        productCards.forEach(card => {
+            const image = card.querySelector('.product-image img');
+            const normalImg = card.getAttribute('data-normal-img');
+            const hoverImg = card.getAttribute('data-hover-img');
+            
+            // Change image on mouse enter
+            card.addEventListener('mouseenter', () => {
+                gsap.to(image, {
+                    opacity: 0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        image.src = hoverImg;
+                        gsap.to(image, {
+                            opacity: 1,
+                            duration: 0.3
+                        });
+                    }
+                });
+            });
+            
+            // Restore image on mouse leave
+            card.addEventListener('mouseleave', () => {
+                gsap.to(image, {
+                    opacity: 0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        image.src = normalImg;
+                        gsap.to(image, {
+                            opacity: 1,
+                            duration: 0.3
+                        });
+                    }
+                });
+            });
+        });
+        
+        // Animate category cards on scroll
+        const categoryCards = document.querySelectorAll('.category-card');
+        
+        categoryCards.forEach((card, index) => {
+            // Staggered animation on scroll - adjusted to start earlier
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: '.categories-section',
+                    start: "top bottom", // Start when the section enters viewport
+                    toggleActions: "play none none none"
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.6,
+                delay: index * 0.15, // Reduced delay
+                ease: "power2.out"
+            });
+            
+            // We're now using pure CSS for hover animations
+            // No need for JavaScript hover handlers
+        });
+        
+        // Custom cursor follower
+        const cursor = document.querySelector(".cursor-follower");
+        const cursorDot = document.querySelector(".cursor-dot");
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        let cursorX = 0;
+        let cursorY = 0;
+        
+        const speed = 0.1;
+        
+        // Update mouse position
+        document.addEventListener("mousemove", (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Update dot position immediately
+            cursorDot.style.left = mouseX + "px";
+            cursorDot.style.top = mouseY + "px";
+        });
+        
+        // Hide cursor on mouse leave
+        document.addEventListener("mouseleave", () => {
+            cursor.style.opacity = "0";
+            cursorDot.style.opacity = "0";
+        });
+        
+        // Show cursor on mouse enter
+        document.addEventListener("mouseenter", () => {
+            cursor.style.opacity = "1";
+            cursorDot.style.opacity = "1";
+        });
+        
+        // Add hover effect to interactive elements
+        const hoverElements = document.querySelectorAll('a, button, .category-card, .product-card, .nav-icon, .menu-icon');
+        
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('cursor-hover');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('cursor-hover');
+            });
+        });
+        
+        // Animation loop for smooth cursor movement
+        function animateCursor() {
+            // Calculate the distance between mouse and cursor
+            const dx = mouseX - cursorX;
+            const dy = mouseY - cursorY;
+            
+            // Update cursor position with easing
+            cursorX += dx * speed;
+            cursorY += dy * speed;
+            
+            // Apply the position
+            cursor.style.left = cursorX + "px";
+            cursor.style.top = cursorY + "px";
+            
+            // Continue animation loop
+            requestAnimationFrame(animateCursor);
+        }
+        
+        // Start animation loop
+        animateCursor();
+        
+        // Footer animations
+        gsap.from('.footer-column', {
+            scrollTrigger: {
+                trigger: '.footer',
+                start: 'top bottom',
+                toggleActions: 'play none none none'
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power2.out'
+        });
+        
+        gsap.from('.footer-bottom', {
+            scrollTrigger: {
+                trigger: '.footer-bottom',
+                start: 'top bottom',
+                toggleActions: 'play none none none'
+            },
+            y: 20,
+            opacity: 0,
+            duration: 0.6,
+            delay: 0.3,
+            ease: 'power2.out'
+        });
+    </script>
+</body>
+</html>
